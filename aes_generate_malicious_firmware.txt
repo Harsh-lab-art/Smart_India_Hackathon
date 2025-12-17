@@ -1,0 +1,89 @@
+# aes_generate_malicious_firmware.py
+#
+# SAFE SAMPLE VERSION FOR ML PIPELINE TESTING
+# ---------------------------------------------------
+# This script does NOT perform real AES encryption.
+# It only adds a mock header and copies the file so
+# your GNN model can test classification pipeline.
+
+import argparse
+from pathlib import Path
+
+
+def mock_aes_encrypt_file(input_path: str, output_path: str, password: str):
+    """
+    SAFE MOCK ENCRYPTOR
+    Adds a fake AES header + original content.
+    """
+    with open(input_path, "rb") as f:
+        original = f.read()
+
+    fake_header = b"MOCK_AES_128_HEADER_" + password.encode() + b"\n"
+
+    with open(output_path, "wb") as out:
+        out.write(fake_header + original)
+
+
+def generate_aes_malicious_firmware(
+    clean_dir: str,
+    malicious_dir: str,
+    password: str,
+    suffix: str = "_aes",
+):
+    """
+    Take all .bin files from clean_dir,
+    create fake AES-encrypted versions in malicious_dir.
+
+    clean/fw1.bin → malicious/fw1_aes.bin
+    """
+    clean_path = Path(clean_dir)
+    malicious_path = Path(malicious_dir)
+
+    if not clean_path.is_dir():
+        raise FileNotFoundError(f"Clean firmware dir not found: {clean_path}")
+
+    malicious_path.mkdir(parents=True, exist_ok=True)
+
+    bin_files = list(clean_path.glob("*.bin"))
+    if not bin_files:
+        print(f"[!] No .bin files found in {clean_path}")
+        return
+
+    print(f"[+] Found {len(bin_files)} firmware files.")
+
+    for fw in bin_files:
+        out_name = fw.stem + suffix + fw.suffix
+        out_path = malicious_path / out_name
+
+        print(f"[+] Creating mock-encrypted: {fw.name} -> {out_name}")
+
+        mock_aes_encrypt_file(
+            input_path=str(fw),
+            output_path=str(out_path),
+            password=password,
+        )
+
+    print("[+] Finished generating mock AES-128 firmware files.")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Generate MOCK AES-128 'malicious' firmware from clean firmware."
+    )
+    parser.add_argument("--clean_dir", type=str, default="data/firmware/clean")
+    parser.add_argument("--malicious_dir", type=str, default="data/firmware/malicious")
+    parser.add_argument("--password", type=str, required=True)
+    parser.add_argument("--suffix", type=str, default="_aes")
+
+    args = parser.parse_args()
+
+    generate_aes_malicious_firmware(
+        clean_dir=args.clean_dir,
+        malicious_dir=args.malicious_dir,
+        password=args.password,
+        suffix=args.suffix,
+    )
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Crypto Detection</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <rect x="8" y="8" width="32" height="32" rx="4" stroke="#00d9ff" stroke-width="2"/>
+                        <path d="M16 24L22 30L32 18" stroke="#00d9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1>Welcome Back</h1>
+                <p>Sign in to continue to Crypto Detection</p>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="your.email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-link" onclick="showForgotPassword(); return false;">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary">Sign In</button>
+
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+                </div>
+            </form>
+
+            <div id="loginMessage" class="message"></div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reset Password</h2>
+                <button class="close-btn" onclick="closeForgotPassword()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Step 1: Enter Email -->
+            <div id="forgotStep1" class="modal-body">
+                <p class="modal-description">Enter your email address and we'll send you an OTP to reset your password.</p>
+                <form id="forgotEmailForm">
+                    <div class="form-group">
+                        <label for="forgotEmail">Email Address</label>
+                        <input type="email" id="forgotEmail" required placeholder="your.email@example.com">
+                    </div>
+                    <button type="submit" class="btn-primary">Send OTP</button>
+                </form>
+            </div>
+
+            <!-- Step 2: Enter OTP -->
+            <div id="forgotStep2" class="modal-body" style="display: none;">
+                <p class="modal-description">Enter the 6-digit OTP sent to <strong id="otpEmail"></strong></p>
+                <form id="verifyOtpForm">
+                    <div class="form-group">
+                        <label for="otpCode">OTP Code</label>
+                        <input type="text" id="otpCode" required placeholder="000000" maxlength="6" pattern="[0-9]{6}">
+                    </div>
+                    <button type="submit" class="btn-primary">Verify OTP</button>
+                    <button type="button" class="btn-secondary" onclick="resendOTP()">Resend OTP</button>
+                </form>
+            </div>
+
+            <!-- Step 3: Reset Password -->
+            <div id="forgotStep3" class="modal-body" style="display: none;">
+                <p class="modal-description">Enter your new password</p>
+                <form id="resetPasswordForm">
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" required placeholder="Enter new password" minlength="8">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" required placeholder="Confirm new password">
+                    </div>
+                    <button type="submit" class="btn-primary">Reset Password</button>
+                </form>
+            </div>
+
+            <div id="forgotMessage" class="message"></div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

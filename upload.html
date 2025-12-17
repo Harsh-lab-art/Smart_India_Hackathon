@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crypto Algorithm Detector</title>
+</head>
+<body style="font-family: Arial; padding: 40px;">
+    <h2>Upload Source Code File</h2>
+
+    <input type="file" id="fileInput"><br><br>
+    <button onclick="sendFile()">Analyze</button>
+
+    <h3 id="result"></h3>
+
+    <script>
+        async function sendFile() {
+            let fileInput = document.getElementById("fileInput");
+            if (fileInput.files.length === 0) {
+                alert("Please select a file");
+                return;
+            }
+
+            let formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            let response = await fetch("http://localhost:5000/predict", {
+                method: "POST",
+                body: formData
+            });
+
+            let data = await response.json();
+
+            document.getElementById("result").innerHTML = `
+                <b>--- RESULT ---</b><br>
+                Function: ${data.function}<br>
+                Detected: ${data.detected}<br>
+                Confidence: ${data.confidence.toFixed(1)}%
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>ML-Powered Firmware Analysis</title>
+    <link rel="stylesheet" href="styles.css?v=2.0">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <span class="badge">ML-Powered Firmware Analysis</span>
+            <div style="display: flex; gap: 0.75rem;">
+                <button class="sign-out-btn" onclick="window.location.href='history.html'">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 2V8L12 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    History
+                </button>
+                <button class="sign-out-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M6 14H3.33333C2.97971 14 2.64057 13.8595 2.39052 13.6095C2.14048 13.3594 2 13.0203 2 12.6667V3.33333C2 2.97971 2.14048 2.64057 2.39052 2.39052C2.64057 2.14048 2.97971 2 3.33333 2H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.6667 11.3333L14 8L10.6667 4.66667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M14 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="hero-section">
+            <h1 class="main-title">
+                Detect Crypto Primitives in<br>
+                <span class="highlight">Black-Box Firmware</span>
+            </h1>
+            <p class="subtitle">
+                Cross-ISA binary analysis using Transformers and Graph Neural Networks.<br>
+                Automatically identify cryptographic functions, protocols, and state<br>
+                machines without source code or symbols.
+            </p>
+            
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="scrollToUpload()">
+                    Start Analysis
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3.33334 8H12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 3.33334L12.6667 8L8 12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="btn btn-secondary">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M14.6667 10V12.6667C14.6667 13.0203 14.5262 13.3594 14.2762 13.6095C14.0261 13.8595 13.687 14 13.3333 14H2.66667C2.31305 14 1.97391 13.8595 1.72386 13.6095C1.47381 13.3594 1.33334 13.0203 1.33334 12.6667V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4.66666 6.66666L8 10L11.3333 6.66666" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 10V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    View Source
+                </button>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value">5+</div>
+                    <div class="stat-label">Supported ISAs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">10+</div>
+                    <div class="stat-label">Crypto Algorithms</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">95%</div>
+                    <div class="stat-label">Detection Accuracy</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="upload-section" id="uploadSection">
+            <div class="upload-card">
+                <div class="upload-icon">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <path d="M42 30V38C42 39.0609 41.5786 40.0783 40.8284 40.8284C40.0783 41.5786 39.0609 42 38 42H10C8.93913 42 7.92172 41.5786 7.17157 40.8284C6.42143 40.0783 6 39.0609 6 38V30" stroke="#00D9FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M34 16L24 6L14 16" stroke="#00D9FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M24 6V30" stroke="#00D9FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                
+                <h2 class="upload-title">Upload Firmware Binary</h2>
+                <p class="upload-description">
+                    Supports ELF, raw binaries, and firmware images across ARM, x86, MIPS, RISC-V, and AVR
+                </p>
+
+                <div class="drop-zone" id="dropZone">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <path d="M28 20V25.3333C28 26.0406 27.719 26.7189 27.219 27.219C26.7189 27.719 26.0406 28 25.3333 28H6.66667C5.95942 28 5.28115 27.719 4.78105 27.219C4.28095 26.7189 4 26.0406 4 25.3333V20" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22.6667 10.6667L16 4L9.33334 10.6667" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 4V20" stroke="#00D9FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <p class="drop-text">Click to upload or drag and drop</p>
+                    <p class="drop-subtext">.bin, .elf, .hex  (max 50MB)</p>
+                    <input type="file" id="fileInput" accept=".bin,.elf,.hex,.img" hidden>
+                </div>
+
+                <button class="btn btn-analyze" id="analyzeBtn" disabled>
+                    Start Analysis
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js?v=2.0"></script>
+</body>
+</html>

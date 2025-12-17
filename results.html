@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Analysis Results - Firmware Analysis</title>
+    <link rel="stylesheet" href="results.css?v=2.0">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-left">
+                <button class="back-btn" onclick="window.location.href='index.html'">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back
+                </button>
+                <div class="file-info">
+                    <h2 id="fileName">firmware_sample.bin</h2>
+                    <span id="fileSize" class="file-meta">2.4 MB | ARM Architecture</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button class="btn-icon" onclick="window.location.href='history.html'">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 2V8L12 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    History
+                </button>
+                <button class="btn-icon" id="analyzeBtn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M14.6667 8A6.66667 6.66667 0 1 1 8 1.33334" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    Analyze
+                </button>
+                <button class="btn-icon">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M6 14H3.33333C2.97971 14 2.64057 13.8595 2.39052 13.6095C2.14048 13.3594 2 13.0203 2 12.6667V3.33333C2 2.97971 2.14048 2.64057 2.39052 2.39052C2.64057 2.14048 2.97971 2 3.33333 2H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.6667 11.3333L14 8L10.6667 4.66667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M14 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Pipeline Status -->
+        <div class="pipeline-section">
+            <h3>Pipeline Status</h3>
+            <div class="pipeline-steps">
+                <div class="step completed">
+                    <div class="step-icon">✓</div>
+                    <div class="step-info">
+                        <div class="step-title">Binary Lifting</div>
+                        <div class="step-meta">Completed in 2.3s</div>
+                    </div>
+                </div>
+                <div class="step completed">
+                    <div class="step-icon">✓</div>
+                    <div class="step-info">
+                        <div class="step-title">Feature Extraction</div>
+                        <div class="step-meta">824 features extracted</div>
+                    </div>
+                </div>
+                <div class="step completed">
+                    <div class="step-icon">✓</div>
+                    <div class="step-info">
+                        <div class="step-title">ML Classification</div>
+                        <div class="step-meta">3 functions • 94.2% confidence</div>
+                    </div>
+                </div>
+                <div class="step completed">
+                    <div class="step-icon">✓</div>
+                    <div class="step-info">
+                        <div class="step-title">Similarity Search</div>
+                        <div class="step-meta">Database scan complete</div>
+                    </div>
+                </div>
+                <div class="step completed">
+                    <div class="step-icon">✓</div>
+                    <div class="step-info">
+                        <div class="step-title">Protocol Inferred</div>
+                        <div class="step-meta">TLS 1.2 detected</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics Cards -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 11L12 14L22 4" stroke="#00d9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="#00d9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-label">Crypto Functions</div>
+                    <div class="metric-value" id="cryptoFunctions">23</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="#ff9500" stroke-width="2"/>
+                        <path d="M3 9H21" stroke="#ff9500" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-label">Non-Crypto Functions</div>
+                    <div class="metric-value" id="nonCryptoFunctions">824</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="#00ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-label">Avg Confidence</div>
+                    <div class="metric-value" id="avgConfidence">94.2%</div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ff5555" stroke-width="2"/>
+                        <path d="M12 6V12L16 14" stroke="#ff5555" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-label">Protocol</div>
+                    <div class="metric-value" id="protocol">TLS 1.2</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" data-tab="functions">Functions</button>
+            <button class="tab" data-tab="control">Control Flow</button>
+            <button class="tab" data-tab="similarity">Similarity</button>
+            <button class="tab" data-tab="protocol">Protocol</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content active" id="functions">
+            <div class="section-header">
+                <h3>Detected Cryptographic Algorithms</h3>
+            </div>
+            
+            <!-- Architecture Info -->
+            <div class="architecture-banner" id="architectureBanner" style="display: none;">
+                <span class="arch-label">Detected Architecture:</span>
+                <span class="arch-value" id="detectedArchitecture">ARM64/AArch64</span>
+            </div>
+            
+            <!-- Protocol Info -->
+            <div class="protocol-section" id="protocolSection" style="display: none;">
+                <h4 class="protocol-title">🔐 Detected Security Protocols</h4>
+                <div id="protocolList" class="protocol-list">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Symmetric Cipher Algorithms -->
+            <div class="category-section">
+                <h4 class="category-title">🔐 Symmetric Cipher Algorithms</h4>
+                <div class="table-container">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Algorithm</th>
+                                <th>Architecture</th>
+                                <th>Confidence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="symmetricTable">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Hash Function Algorithms -->
+            <div class="category-section">
+                <h4 class="category-title">🔒 Hash Function Algorithms</h4>
+                <div class="table-container">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Algorithm</th>
+                                <th>Architecture</th>
+                                <th>Confidence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hashTable">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- MAC Algorithms -->
+            <div class="category-section">
+                <h4 class="category-title">🔑 MAC Algorithms</h4>
+                <div class="table-container">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Algorithm</th>
+                                <th>Architecture</th>
+                                <th>Confidence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="macTable">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="control">
+            <div class="cfg-card">
+                <div class="cfg-header">
+                    <div>
+                        <h3 class="cfg-title">Control Flow Graph</h3>
+                        <p class="cfg-subtitle">Function: <span id="cfgFunctionName">sub_401234 (AES-128)</span></p>
+                    </div>
+                    <span class="cfg-crypto-badge">Crypto Pattern Detected</span>
+                </div>
+                
+                <div class="cfg-container">
+                    <div class="cfg-flow" id="controlFlowGraph">
+                        <!-- Entry Block -->
+                        <div class="cfg-row">
+                            <div class="cfg-block cfg-entry">
+                                <p class="cfg-address">0x00401234</p>
+                                <p class="cfg-label">Entry Block</p>
+                                <p class="cfg-instructions">4 instructions</p>
+                            </div>
+                            <svg class="cfg-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        
+                        <!-- Round Loop -->
+                        <div class="cfg-row cfg-indented">
+                            <div class="cfg-block cfg-loop">
+                                <p class="cfg-address">0x00401250</p>
+                                <p class="cfg-label cfg-crypto-text">Round Loop</p>
+                                <p class="cfg-instructions">12 instructions</p>
+                                <span class="cfg-badge">S-Box Lookup</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Connection Line -->
+                        <div class="cfg-row cfg-indented">
+                            <div class="cfg-connector">
+                                <div class="cfg-line"></div>
+                                <svg class="cfg-arrow-small" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Mix Columns -->
+                        <div class="cfg-row cfg-indented">
+                            <div class="cfg-block cfg-normal">
+                                <p class="cfg-address">0x00401290</p>
+                                <p class="cfg-label">Mix Columns</p>
+                                <p class="cfg-instructions">8 instructions</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Arrow Down -->
+                        <div class="cfg-row">
+                            <svg class="cfg-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        
+                        <!-- Exit Block -->
+                        <div class="cfg-row">
+                            <div class="cfg-block cfg-exit">
+                                <p class="cfg-address">0x004012C0</p>
+                                <p class="cfg-label cfg-exit-text">Exit Block</p>
+                                <p class="cfg-instructions">2 instructions</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Analysis Box -->
+                    <div class="cfg-analysis">
+                        <p class="cfg-analysis-text">
+                            <span class="cfg-analysis-label">Analysis:</span> 
+                            Detected characteristic AES round structure with S-box lookups (constant table access patterns) and MixColumns operations. 
+                            <span class="cfg-confidence">High confidence: 97.3%</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="similarity">
+            <div class="info-card">
+                <h4>🔧 Smart Contract Settings</h4>
+                <p>Get layer-wise alignment of firmware/binary/script context</p>
+                <div class="form-group">
+                    <label>Contract Address</label>
+                    <input type="text" class="form-input" placeholder="0x..." />
+                </div>
+                <button class="btn-primary">Scan Contract Address</button>
+                <div class="deployment-info">
+                    <h5>Haven't deployed yet?</h5>
+                    <p>Deploy your contract to Ethereum, BSC, Polygon, or any EVM-compatible chain. We support all major networks.</p>
+                    <ul>
+                        <li>Single chain from $5 upfront</li>
+                        <li>Multi-chain deployment available</li>
+                        <li>Verify source code automatically</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="protocol">
+            <!-- Top Metrics Row -->
+            <div class="protocol-top-metrics">
+                <div class="protocol-metric-card crypto-metric">
+                    <div class="metric-header">
+                        <span class="metric-label">Crypto Functions</span>
+                        <svg class="metric-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value-large" id="cryptoFunctionsCount">23</div>
+                </div>
+                
+                <div class="protocol-metric-card non-crypto-metric">
+                    <div class="metric-header">
+                        <span class="metric-label">Non Crypto Functions</span>
+                        <svg class="metric-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                            <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value-large" id="nonCryptoFunctionsCount">824</div>
+                </div>
+                
+                <div class="protocol-metric-card confidence-metric">
+                    <div class="metric-header">
+                        <span class="metric-label">Avg Confidence</span>
+                        <svg class="metric-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="metric-value-large" id="avgConfidenceValue">94.2%</div>
+                </div>
+            </div>
+            
+            <!-- Tab Navigation -->
+            <div class="protocol-tabs">
+                <button class="protocol-tab active" data-protocol-tab="functions">Functions</button>
+                <button class="protocol-tab" data-protocol-tab="control-flow">Control Flow</button>
+                <button class="protocol-tab" data-protocol-tab="similarity">Similarity</button>
+                <button class="protocol-tab" data-protocol-tab="protocol-analysis">Protocol</button>
+            </div>
+            
+            <!-- Secondary Metrics Row -->
+            <div class="protocol-secondary-metrics" id="protocolStatsGrid">
+                <div class="protocol-small-card crypto-protocols-card">
+                    <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <div class="card-content">
+                        <div class="card-label">Crypto Protocols</div>
+                        <div class="card-value" id="cryptoProtocolCount">6</div>
+                    </div>
+                </div>
+                
+                <div class="protocol-small-card non-crypto-card">
+                    <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <div class="card-content">
+                        <div class="card-label">Non-Crypto</div>
+                        <div class="card-value" id="nonCryptoStepCount">2</div>
+                    </div>
+                </div>
+                
+                <div class="protocol-small-card high-security-card">
+                    <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="card-content">
+                        <div class="card-label">High Security</div>
+                        <div class="card-value" id="highSecurityCount">4</div>
+                    </div>
+                </div>
+                
+                <div class="protocol-small-card deprecated-card">
+                    <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 12V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="card-content">
+                        <div class="card-label">Deprecated</div>
+                        <div class="card-value" id="deprecatedCount">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="charts-row">
+                <!-- Protocol Distribution Pie Chart -->
+                <div class="chart-container">
+                    <h4 class="chart-title">Protocol Distribution</h4>
+                    <p class="chart-subtitle">Crypto vs Non-Crypto protocols</p>
+                    <canvas id="protocolPieChart" width="300" height="300"></canvas>
+                </div>
+
+                <!-- Security Levels Donut Chart -->
+                <div class="chart-container">
+                    <h4 class="chart-title">Security Levels</h4>
+                    <p class="chart-subtitle">Distribution by security classification</p>
+                    <canvas id="securityDonutChart" width="300" height="300"></canvas>
+                </div>
+            </div>
+
+            <!-- Protocol Types Bar Chart -->
+            <div class="chart-container-full">
+                <h4 class="chart-title">Protocol Types Analysis</h4>
+                <p class="chart-subtitle">Breakdown by protocol type with confidence scores</p>
+                <canvas id="protocolBarChart" height="80"></canvas>
+            </div>
+
+            <!-- Confidence by Protocol Step -->
+            <div class="chart-container-full">
+                <h4 class="chart-title">Confidence by Protocol Step</h4>
+                <p class="chart-subtitle">Detection confidence for each protocol step</p>
+                <div id="confidenceBarChart" class="confidence-bars">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Protocol State Inference -->
+            <div class="protocol-state-section">
+                <div class="section-header-inline">
+                    <h4>Protocol State Inference</h4>
+                    <div class="step-badges">
+                        <span class="step-badge crypto-badge" id="cryptoStepsBadge">🔒 0 Crypto Steps</span>
+                        <span class="step-badge non-crypto-badge" id="nonCryptoStepsBadge">📦 0 Non-Crypto Steps</span>
+                    </div>
+                </div>
+                <p class="section-subtitle">Detected protocol patterns with handshaking, key exchange, and encryption analysis</p>
+                
+                <div id="protocolDetailsContainer" class="protocol-details-container">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- No Protocols Message (Hidden by default) -->
+            <div class="no-protocols-message" id="noProtocolsMessage" style="display: none;">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                    <path d="M32 8L8 20V32C8 44 16 54 32 56C48 54 56 44 56 32V20L32 8Z" stroke="#808080" stroke-width="2" fill="none"/>
+                    <path d="M32 24V32M32 40H32.02" stroke="#808080" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <p>No security protocols detected in this firmware</p>
+                <span class="hint">Upload firmware with TLS, SSH, or IKE/IPsec to see protocol analysis</span>
+            </div>
+
+            <!-- AI Crypto Assistant -->
+            <div class="ai-assistant-container">
+                <div class="ai-assistant-card">
+                    <div class="ai-header">
+                        <div class="ai-header-content">
+                            <div class="ai-header-title">
+                                <svg class="ai-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <h3>AI Crypto Expert</h3>
+                            </div>
+                            <p class="ai-subtitle">Ask about functions, algorithms, or protocol patterns</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-messages" id="aiMessages">
+                        <div class="ai-welcome">
+                            <svg class="ai-welcome-icon" width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p>Ask me anything about crypto detection!</p>
+                            <p class="ai-example">Example: "What makes this function look like AES?"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-input-container">
+                        <input 
+                            type="text" 
+                            id="aiInput" 
+                            class="ai-input" 
+                            placeholder="Ask about crypto functions, protocols, or patterns..."
+                            autocomplete="off"
+                        />
+                        <button id="aiSendBtn" class="ai-send-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Analyze New Firmware</h2>
+                <button class="close-btn" onclick="closeUploadModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <p class="modal-description">Upload a new firmware binary for analysis. Previous results will be saved to history.</p>
+                
+                <div class="upload-zone" id="modalDropZone">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <path d="M42 30V38C42 39.0609 41.5786 40.0783 40.8284 40.8284C40.0783 41.5786 39.0609 42 38 42H10C8.93913 42 7.92172 41.5786 7.17157 40.8284C6.42143 40.0783 6 39.0609 6 38V30" stroke="#00D9FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M34 16L24 6L14 16" stroke="#00D9FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M24 6V30" stroke="#00D9FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <p class="upload-text">Click to upload or drag and drop</p>
+                    <p class="upload-subtext">.bin, .elf, .hex, .img, .txt (max 50MB)</p>
+                    <input type="file" id="modalFileInput" accept=".bin,.elf,.hex,.img,.txt" hidden>
+                </div>
+                
+                <button class="btn-analyze-modal" id="modalAnalyzeBtn" disabled>
+                    Start Analysis
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="results.js?v=2.0"></script>
+</body>
+</html>

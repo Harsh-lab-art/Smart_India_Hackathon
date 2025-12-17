@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis History - Crypto Detection</title>
+    <link rel="stylesheet" href="results.css">
+    <style>
+        .history-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(20, 25, 35, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: #808080;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00d9ff;
+        }
+
+        .history-table-container {
+            background: rgba(20, 25, 35, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .history-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .refresh-btn {
+            background: #00d9ff;
+            color: #0a0e1a;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: #00b8e6;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table thead {
+            background: rgba(30, 35, 45, 0.8);
+        }
+
+        .history-table th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #808080;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .history-table tbody tr {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.2s ease;
+            cursor: pointer;
+        }
+
+        .history-table tbody tr:hover {
+            background: rgba(30, 35, 45, 0.4);
+        }
+
+        .history-table td {
+            padding: 1rem 1.5rem;
+            font-size: 0.9375rem;
+        }
+
+        .timestamp {
+            color: #a0a0a0;
+            font-size: 0.875rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #808080;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #808080;
+        }
+
+        .empty-state svg {
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-left">
+                <button class="back-btn" onclick="window.location.href='index.html'">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back
+                </button>
+                <div class="file-info">
+                    <h2>Analysis History</h2>
+                    <span class="file-meta">View all past firmware analyses</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button class="btn-icon" onclick="window.location.href='index.html'">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 2V8L12 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    New Analysis
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="history-container">
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Analyses</h3>
+                <div class="value" id="totalAnalyses">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>Average Confidence</h3>
+                <div class="value" id="avgConfidence">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>Most Detected</h3>
+                <div class="value" id="mostDetected" style="font-size: 1.5rem;">-</div>
+            </div>
+        </div>
+
+        <!-- History Table -->
+        <div class="history-table-container">
+            <div class="history-header">
+                <h2>Recent Analyses</h2>
+                <button class="refresh-btn" onclick="loadHistory()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M14.6667 8A6.66667 6.66667 0 1 1 8 1.33334" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    Refresh
+                </button>
+            </div>
+            
+            <div id="tableContent">
+                <div class="loading">
+                    <p>Loading history...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadHistory() {
+            try {
+                // Load statistics
+                const statsResponse = await fetch('http://localhost:5000/stats');
+                if (statsResponse.ok) {
+                    const stats = await statsResponse.json();
+                    document.getElementById('totalAnalyses').textContent = stats.total_analyses;
+                    document.getElementById('avgConfidence').textContent = stats.average_confidence + '%';
+                    
+                    if (stats.algorithm_distribution && stats.algorithm_distribution.length > 0) {
+                        const mostCommon = stats.algorithm_distribution.reduce((max, item) => 
+                            item.count > max.count ? item : max
+                        );
+                        document.getElementById('mostDetected').textContent = mostCommon._id || 'N/A';
+                    }
+                }
+
+                // Load history
+                const historyResponse = await fetch('http://localhost:5000/history?limit=100');
+                if (!historyResponse.ok) {
+                    throw new Error('Failed to fetch history');
+                }
+
+                const data = await historyResponse.json();
+                displayHistory(data.analyses);
+
+            } catch (error) {
+                console.error('Error loading history:', error);
+                document.getElementById('tableContent').innerHTML = `
+                    <div class="empty-state">
+                        <p>Failed to load history. Make sure the server is running.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayHistory(analyses) {
+            const tableContent = document.getElementById('tableContent');
+
+            if (!analyses || analyses.length === 0) {
+                tableContent.innerHTML = `
+                    <div class="empty-state">
+                        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                            <rect x="8" y="8" width="48" height="48" rx="4" stroke="#808080" stroke-width="2"/>
+                            <path d="M20 28H44M20 36H44M20 44H32" stroke="#808080" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <p>No analyses found. Upload a file to get started!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const tableHTML = `
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Filename</th>
+                            <th>Architecture</th>
+                            <th>Detected</th>
+                            <th>Confidence</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${analyses.map(analysis => {
+                            const date = new Date(analysis.timestamp);
+                            const formattedDate = date.toLocaleString();
+                            const confidenceClass = analysis.confidence >= 80 ? 'high' : 
+                                                   analysis.confidence >= 60 ? 'medium' : 'low';
+                            const algoClass = (analysis.detected_algorithm || '').toLowerCase().replace(/[^a-z]/g, '');
+                            
+                            return `
+                                <tr onclick="viewAnalysis('${analysis._id}')">
+                                    <td class="timestamp">${formattedDate}</td>
+                                    <td>${analysis.filename}</td>
+                                    <td>${analysis.architecture || 'auto'}</td>
+                                    <td><span class="classification ${algoClass}">${analysis.detected_algorithm}</span></td>
+                                    <td class="confidence ${confidenceClass}">${analysis.confidence.toFixed(1)}%</td>
+                                    <td><span class="classification" style="background: rgba(0, 255, 136, 0.2); color: #00ff88;">✓ ${analysis.status}</span></td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            tableContent.innerHTML = tableHTML;
+        }
+
+        function viewAnalysis(analysisId) {
+            // Store the analysis ID and redirect to results page
+            window.location.href = `results.html?id=${analysisId}&from=db`;
+        }
+
+        // Load history on page load
+        window.addEventListener('DOMContentLoaded', loadHistory);
+    </script>
+</body>
+</html>

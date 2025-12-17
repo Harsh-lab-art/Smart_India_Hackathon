@@ -1,0 +1,32 @@
+# Core ML
+torch==2.1.0
+torchvision==0.16.0
+torchaudio==2.1.0
+
+# PyTorch Geometric + dependencies
+torch_geometric==2.4.0
+pyg_lib==0.3.1
+torch_scatter==2.1.2
+torch_sparse==0.6.18
+torch_cluster==1.6.3
+torch_spline_conv==1.2.2
+
+# Utilities
+numpy
+tqdm
+scikit-learn
+networkx
+pandas
+
+# Optional (logging + debugging)
+rich
+
+# Web API
+flask
+flask-cors
+pymongo
+
+
+# Authentication
+bcrypt
+pyjwt
