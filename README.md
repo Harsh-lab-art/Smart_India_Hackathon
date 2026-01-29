@@ -327,7 +327,7 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file.
 
 ## 📧 Contact
 
-For questions or collaboration: Harsh Kumar Verma (team lead Developer ) : harsh9760verma.com
+For questions or collaboration: Harsh Kumar Verma (team lead Developer ) : harsh9760verma@gmail.com
 
 ## 🙏 Acknowledgments
 
